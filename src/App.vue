@@ -1,10 +1,12 @@
 <script setup>
 import NavbarComponent from './components/Navar.vue'
+import Homeview from './views/Homeview.vue';
 import Foooter from './components/Foooter.vue';
 </script>
 
 <template>
   <NavbarComponent />
+  <!-- <Homeview /> -->
   <RouterView />
   <Foooter />
 </template>

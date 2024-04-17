@@ -1,44 +1,183 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, watch } from "vue";
+import { h } from "vue";
+
 import { UploadOutlined, SearchOutlined } from "@ant-design/icons-vue";
 const value18 = ref();
 const value19 = ref();
 const activeKey = ref("1");
 const dataImage = ref([]);
-const page = ref(0);
+const page = ref(1);
+const limit = ref(30);
+const pgs = ref(30)
+const open = ref(false);
+const showModal = () => {
+  open.value = true;
+};
+const current = ref();
 
-function onFileChange(event) {
-  const file = event.target.files[0];
-  const reader = new FileReader();
+const getAllImage = async () => {
+  const apiUrl = "http://localhost:8000/";
+  loading.value = true;
 
-  reader.onload = function (event) {
-    const base64Image = event.target.result;
-    sendImageToServer(base64Image);
-  };
-
-  reader.readAsDataURL(file);
-}
-
-async function sendImageToServer(base64Image) {
   try {
-    const response = await fetch("api/....", {
-      method: "POST",
+    const requestOptionsGetAll = {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ image: base64Image }),
-    });
+    };
 
-    // 
+    const response = await fetch(apiUrl + `image`, requestOptionsGetAll);
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch data.");
+    }
+
     const responseData = await response.json();
-    console.log(responseData);
+
+    // Tính toán số trang dựa trên số lượng phần tử và giới hạn
+    // totalPage.value = Math.ceil(responseData.length / limit.value);
+    totalPage.value = responseData.length;
+    console.log("tt page",totalPage.value);
+
+    // Tính toán offset dựa trên trang hiện tại và giới hạn
+    const offset = (page.value - 1) * limit.value;
+
+    // Lấy dữ liệu phân trang từ mảng dữ liệu
+    const slicedData = responseData.slice(offset, offset + limit.value);
+
+    // Cập nhật dữ liệu hiển thị
+    dataImage.value = slicedData;
   } catch (error) {
-    console.error("Error sending image to server:", error);
+    console.error(error);
+  } finally {
+    loading.value = false;
+  }
+};
+
+// Watch để theo dõi sự thay đổi của trang và gọi hàm getAllImage
+watch(page, () => {
+  getAllImage();
+});
+watch(limit, () => {
+  getAllImage();
+});
+const base64String = ref("");
+const fileType = ref("");
+
+function onFileChange(event) {
+  const ctx = document.getElementById("real-file");
+  ctx.click();
+  if (event.target.files && event.target.files.length > 0) {
+    console.log("Vô đây?");
+    const file = event.target.files[0];
+    fileType.value = file.name.split(".").pop();
+    const reader = new FileReader();
+
+    reader.onload = function (event) {
+      base64String.value = event.target.result
+        .replace("data:", "")
+        .replace(/^.+,/, "");
+      // console.log(base64String.value);
+
+      // Check if base64String is not empty before calling searchImage()
+      if (base64String.value) {
+        searchImage();
+      } else {
+        console.error("No base64 string found.");
+      }
+    };
+
+    reader.readAsDataURL(file);
   }
 }
+const ctRs = ref(false);
+// const ttRs = ref('')
+let ttRs = "";
+const totalPage = ref();
+const searchForText = async () => {
+  if (!value18.value) {
+    getAllImage();
+  }
+  ttRs = value18.value;
+  const apiUrl = "http://localhost:8000/";
+  loading.value = true;
+  dataImage.value = [];
+  try {
+    const requestOptionsGet = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const response = await fetch(
+      apiUrl + `search/${value18.value.trim()}`,
+      requestOptionsGet
+    );
+    if (!response.ok) {
+      throw new Error("Text Error");
+    }
+    const responseData = await response.json();
+    dataImage.value = responseData;
+    totalPage.value = dataImage.value.length;
+    loading.value = false;
+    ctRs.value = true;
+  } catch (error) {
+    loading.value = false;
+    console.log(error);
+  }
+};
+async function searchImage() {
+
+  loading.value = true;
+  const apiUrl = "http://localhost:8000/";
+  const data = {
+    type: fileType.value,
+    base64_string: base64String.value,
+  };
+
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  try {
+    const response = await fetch(apiUrl + "search", requestOptions);
+    if (!response.ok) {
+      throw new Error("image error");
+    }
+    base64String.value = "";
+    fileType.value = "";
+    const responseData = await response.json();
+    dataImage.value = responseData;
+    // console.log(JSON.stringify(responseData, null, 2));
+    loading.value = false;
+  } catch (error) {
+    loading.value = false;
+    console.error("Error:", error);
+  }
+}
+const loading = ref(false);
+onMounted(() => {
+  getAllImage();
+});
 </script>
 
 <template>
+  <div class="banner">
+    <div class="container">
+      <div class="img">
+        <img
+          src="https://img.enjoysport.vn/v1/AUTH_63bc1636b6fd456893cd154b1d53ded7/img/event/WQYUeY9F.jpg"
+          alt=""
+        />
+      </div>
+    </div>
+  </div>
   <div class="main">
     <div class="container">
       <div class="title">
@@ -46,9 +185,51 @@ async function sendImageToServer(base64Image) {
       </div>
 
       <a-tabs v-model:activeKey="activeKey" centered>
-        <a-tab-pane key="1" tab="Chặng 1">
+        <a-tab-pane key="1" tab="Tất cả">
           <div class="input-search">
             <!-- Các input và button tương tự như trước -->
+            <a-input-group
+              compact
+              style="
+                align-items: center;
+                display: flex;
+                justify-content: center;
+              "
+            >
+              <a-input
+                placeholder="Tìm kiếm bằng Bib"
+                v-model:value="value18"
+                style="width: calc(100% - 200px)"
+              >
+              </a-input>
+              <a-button type="primary" @click="searchForText">
+                <template #icon><SearchOutlined /></template>
+              </a-button>
+            </a-input-group>
+            <a-input-group
+              compact
+              style="
+                align-items: center;
+                display: flex;
+                justify-content: center;
+              "
+            >
+              <a-input
+                disabled
+                v-model:value="value19"
+                placeholder="Tìm kiếm bằng hình ảnh"
+                style="width: calc(100% - 200px)"
+              >
+              </a-input>
+              <a-button
+                for="real-file"
+                @click="onFileChange"
+                id="custom-button"
+                type="primary"
+              >
+                <template #icon><UploadOutlined /></template>
+              </a-button>
+            </a-input-group>
           </div>
 
           <input
@@ -58,13 +239,32 @@ async function sendImageToServer(base64Image) {
             @change="onFileChange"
             ref="file"
           />
-
+          <span v-if="ctRs" class="content-result"
+            >Kết quả tìm kiếm cho: <b>{{ ttRs }}</b>
+          </span>
           <div class="list-img">
-            <div class="item-img">
+            <div
+              class="item-img"
+              v-for="(item, index) in dataImage"
+              :key="index"
+            >
               <a-image
-                src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                :width="140"
+                :height="120"
+                :src="item.replace('static\\', 'http://localhost:8000/static/')"
               />
             </div>
+          </div>
+          <div>
+            <!-- {{ totalPage }}dgg -->
+          </div>
+          <div class="pag" v-if="dataImage && dataImage.length > 0">
+            <a-pagination
+              v-model:current="page"
+              :total="totalPage"
+              v-model:page-size="limit"
+              show-less-items
+            />
           </div>
         </a-tab-pane>
 
@@ -78,12 +278,32 @@ async function sendImageToServer(base64Image) {
       </a-tabs>
     </div>
   </div>
+
+  <!-- <a-button type="primary" @click="showModal">Open Modal with customized footer</a-button> -->
+  <a-modal v-model:open="loading" :maskClosable="false" closable="true">
+    <template #footer>
+      <a-button style="display: none" key="back" @click="handleCancel"
+        >Return</a-button
+      >
+      <a-button
+        style="display: none"
+        key="submit"
+        type="primary"
+        :loading="loading"
+        @click="handleOk"
+        >Submit</a-button
+      >
+    </template>
+    <a-spin />
+  </a-modal>
 </template>
 
 <style scoped>
 .main {
   width: 100%;
   min-height: calc(100vh - 10px);
+  background-color: #f8f9fa;
+  margin-bottom: 12px;
 }
 .title {
   width: 100%;
@@ -116,8 +336,10 @@ async function sendImageToServer(base64Image) {
 }
 
 .item-img {
+  height: 120px;
   padding: 4px;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .container {
@@ -126,6 +348,33 @@ async function sendImageToServer(base64Image) {
   padding-left: calc(1.5rem * 0.5);
   margin-right: auto;
   margin-left: auto;
+}
+.pag {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 18px;
+}
+.ant-modal-close-x {
+  display: none !important;
+}
+.banner {
+  width: 100%;
+  position: relative;
+  margin: 18px 0 0 0;
+}
+.banner img {
+  width: 100%;
+  background-repeat: no-repeat;
+  object-fit: cover;
+  border-radius: 12px;
+}
+.banner .img {
+  width: auto;
+  height: auto;
+  overflow: hidden;
+  border-radius: 12px;
 }
 /* Reponsive */
 @media (min-width: 576px) {
