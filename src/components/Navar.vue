@@ -39,6 +39,9 @@
   width: 100%;
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.12);
   background-color: #ffffff;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 .nav {
   width: 100%;
