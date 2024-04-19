@@ -2,14 +2,14 @@
 import { ref, onMounted, watch } from "vue";
 import { h } from "vue";
 
-import { UploadOutlined, SearchOutlined } from "@ant-design/icons-vue";
+import { UploadOutlined, SearchOutlined,   DownloadOutlined } from "@ant-design/icons-vue";
 const value18 = ref();
 const value19 = ref();
 const activeKey = ref("1");
 const dataImage = ref([]);
 const page = ref(1);
 const limit = ref(30);
-const pgs = ref(30)
+const pgs = ref(30);
 const open = ref(false);
 const showModal = () => {
   open.value = true;
@@ -39,7 +39,7 @@ const getAllImage = async () => {
     // Tính toán số trang dựa trên số lượng phần tử và giới hạn
     // totalPage.value = Math.ceil(responseData.length / limit.value);
     totalPage.value = responseData.length;
-    console.log("tt page",totalPage.value);
+    console.log("tt page", totalPage.value);
 
     // Tính toán offset dựa trên trang hiện tại và giới hạn
     const offset = (page.value - 1) * limit.value;
@@ -129,7 +129,6 @@ const searchForText = async () => {
   }
 };
 async function searchImage() {
-
   loading.value = true;
   const apiUrl = "http://localhost:8000/";
   const data = {
@@ -243,17 +242,21 @@ onMounted(() => {
             >Kết quả tìm kiếm cho: <b>{{ ttRs }}</b>
           </span>
           <div class="list-img">
+            <a-image-preview-group>
             <div
               class="item-img"
               v-for="(item, index) in dataImage"
               :key="index"
             >
-              <a-image
-                :width="140"
-                :height="120"
-                :src="item.replace('static\\', 'http://localhost:8000/static/')"
-              />
+             
+                <a-image
+                :preview="{
+     
+    }"
+                :width="200"  :src="item.replace('static\\', 'http://localhost:8000/static/')" />
+             
             </div>
+          </a-image-preview-group>
           </div>
           <div>
             <!-- {{ totalPage }}dgg -->
