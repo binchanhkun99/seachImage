@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
 import { h } from "vue";
+import Card from "../components/Card.vue"
 
 import { UploadOutlined, SearchOutlined } from "@ant-design/icons-vue";
 const value18 = ref();
@@ -231,6 +232,7 @@ onMounted(() => {
               </a-button>
             </a-input-group>
           </div>
+         <Card/>
 
           <input
             id="real-file"
