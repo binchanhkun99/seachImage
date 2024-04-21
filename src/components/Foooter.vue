@@ -1,5 +1,33 @@
 <script setup>
+import request from "../utils/request";
+import { ref, onMounted, watch } from "vue";
 import 'boxicons'
+
+const company_name = ref()
+const address_company = ref()
+
+const phone = ref()
+const email = ref()
+const showEvent = async (id) => {
+  try {
+    const res = await request.get(`get_contact/1`);
+    // console.log("HIHIHII", res);
+    if (res.status === 200) {
+      const data = res.data;
+      company_name.value = data.company_name
+      address_company.value = data.address_company
+      phone.value = data.phone
+      email.value = data.email
+      
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+onMounted(()=>{
+  showEvent()
+})
+
 </script>
 <template>
   <div class="footer">
@@ -7,12 +35,12 @@ import 'boxicons'
       <div class="list-footer">
         <div class="contact">
           <span class="title">Liên hệ chúng tôi</span>
-          <div class="item-contact">CÔNG TY TNHH ENJOY SPORT</div>
+          <div class="item-contact">{{ company_name }}</div>
           <div class="item-contact">
-            Địa chỉ: 537/63 Nguyễn Oanh, Phường 17, Q. Gò Vấp, TP. Hồ Chí Minh
+            Địa chỉ: {{ address_company }}
           </div>
-          <div class="item-contact">Phone: 0816383935</div>
-          <div class="item-contact">Email: info@enjoysport.vn</div>
+          <div class="item-contact">Phone: {{ phone }}</div>
+          <div class="item-contact">Email: {{ email }}</div>
         </div>
         <div class="support">
             <span class="title">Hỗ trợ</span>

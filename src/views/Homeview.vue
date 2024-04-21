@@ -1,7 +1,9 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
 import { h } from "vue";
-import Card from "../components/Card.vue";
+import request from "../utils/request";
+
+import { useRoute } from "vue-router";
 
 import {
   UploadOutlined,
@@ -16,13 +18,52 @@ const page = ref(1);
 const limit = ref(30);
 const pgs = ref(30);
 const open = ref(false);
+// const {id} = defineProps({
+//     id:{
+//         type: string,
+//         require: true
+//     }
+// })
+const link = ref();
+link.value = import.meta.env.VITE_API_URL;
+const route = useRoute();
+
+const idEvent = route.params.id;
+const gptData = ref([]);
+const race_limit = ref(null);
+
+const Edit = ref({
+  name_event: "",
+  address: "",
+  folder: "",
+  banner: "",
+  start_date: "",
+  number_date: "",
+});
+const showEvent = async (id) => {
+  try {
+    const res = await request.get(`events_by_id?event_id=${idEvent}`);
+    // console.log("HIHIHII", res);
+    if (res.status === 200) {
+      const data = res.data;
+      Edit.value.name_event = data.name_event;
+      Edit.value.address = data.address;
+      Edit.value.folder = data.folder;
+      Edit.value.banner = data.banner;
+      Edit.value.start_date = data.start_date;
+      Edit.value.number_date = data.number_date;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
 const showModal = () => {
   open.value = true;
 };
 const current = ref();
 
 const getAllImage = async () => {
-  const apiUrl = "http://localhost:8000/";
+  const apiUrl = link.value;
   loading.value = true;
 
   try {
@@ -44,14 +85,10 @@ const getAllImage = async () => {
     // Tính toán số trang dựa trên số lượng phần tử và giới hạn
     // totalPage.value = Math.ceil(responseData.length / limit.value);
     totalPage.value = responseData.length;
-    console.log("tt page", totalPage.value);
-
     // Tính toán offset dựa trên trang hiện tại và giới hạn
     const offset = (page.value - 1) * limit.value;
-
     // Lấy dữ liệu phân trang từ mảng dữ liệu
     const slicedData = responseData.slice(offset, offset + limit.value);
-
     // Cập nhật dữ liệu hiển thị
     dataImage.value = slicedData;
   } catch (error) {
@@ -65,7 +102,8 @@ watch(activeKey, async (newVal, oldVal) => {
     console.log("Vô đây1", newVal);
     loading.value = true;
     try {
-      const apiUrl = "http://localhost:8000/";
+      const apiUrl = link.value
+  ;
       const requestOptionsGetAll = {
         method: "GET",
         headers: {
@@ -92,6 +130,7 @@ watch(activeKey, async (newVal, oldVal) => {
       loading.value = false;
     }
   } else if (newVal == 1) {
+    showEvent();
     getAllImage();
   }
 });
@@ -141,7 +180,7 @@ const searchForText = async () => {
     getAllImage();
   }
   ttRs = value18.value;
-  const apiUrl = "http://localhost:8000/";
+  const apiUrl = link.value;
   loading.value = true;
   dataImage.value = [];
   try {
@@ -169,9 +208,10 @@ const searchForText = async () => {
   }
 };
 
+
 async function searchImage() {
   loading.value = true;
-  const apiUrl = "http://localhost:8000/";
+  const apiUrl = link.value;
   const data = {
     type: fileType.value,
     base64_string: base64String.value,
@@ -203,6 +243,7 @@ async function searchImage() {
 }
 const loading = ref(false);
 onMounted(() => {
+  showEvent();
   getAllImage();
 });
 </script>
@@ -211,17 +252,14 @@ onMounted(() => {
   <div class="banner">
     <div class="container">
       <div class="img">
-        <img
-          src="https://img.enjoysport.vn/v1/AUTH_63bc1636b6fd456893cd154b1d53ded7/img/event/WQYUeY9F.jpg"
-          alt=""
-        />
+        <img :src="Edit.banner.replace('banner\\', `${link}banner/`)" alt="" />
       </div>
     </div>
   </div>
   <div class="main">
     <div class="container">
       <div class="title">
-        <span>DALAT ULTRA TRAIL 2024</span>
+        <span>{{ Edit.name_event }}</span>
       </div>
 
       <a-tabs v-model:activeKey="activeKey" centered>

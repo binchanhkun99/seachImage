@@ -1,34 +1,94 @@
 <script setup>
-import { ref } from "vue";
+import { ref, defineComponent, onMounted, watch } from "vue";
+import { h } from "vue";
+import Card from "../components/Card.vue";
+
+import { UploadOutlined, SearchOutlined } from "@ant-design/icons-vue";
+
+import request from "../utils/request";
+let index = 0;
+const items = ref(["jack", "lucy"]);
+const value = ref();
+const inputRef = ref();
+const name = ref();
+const searchQuery = ref();
+const rowPerPage = ref(10);
+// console.log("nameSearch:", name.value);
+const VNodes = defineComponent({
+  props: {
+    vnodes: {
+      type: Object,
+      required: true,
+    },
+  },
+  render() {
+    return this.vnodes;
+  },
+});
+
+const valueInput = ref("");
+watch(valueInput, () => {
+  console.log(valueInput.value);
+});
+const link = ref('')
+
+link.value = import.meta.env.VITE_API_URL
+const currentPage = ref(1);
+const pageSize = ref();
+const page = ref();
+const totalPage = ref();
+const gptData = ref();
+page.value = currentPage.value;
+// 👉 Fetching gptData
+const fetchEvents = async () => {
+  console.log("Vào đâyy rồi");
+  await request
+    .get(
+      `events?page=${page.value}&limit=${rowPerPage.value}&search=${searchQuery.value}`
+    )
+    .then((rss) => {
+      console.log("Test status", rss.data);
+      if (rss.status === 200) {
+        gptData.value = rss.data.events;
+        totalPage.value = rss.data.count;
+        pageSize.value = Math.ceil(totalPage.value / rowPerPage.value);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+onMounted(() => {
+  fetchEvents();
+});
+
 </script>
+
 <template>
-  <div class="event">
+  <div class="event" style="position: relative; top: 44px;">
     <div class="container">
-      <span class="title-event">Sự kiện</span>
-      <div class="item-event">
+      <span class="title-event" >Sự kiện</span>
+      
+                    <div class="item-event" v-for="(item, index) in gptData" :key="index">
+                      <router-link style="width: 100%; display: flex;"
+                    :to="{ name: 'DetailEvent', params: { id: item.id } }"
+                  >
         <div class="img">
           <img
-            src="https://img.enjoysport.vn/v1/AUTH_63bc1636b6fd456893cd154b1d53ded7/img/event/WQYUeY9F.jpg"
+            :src="
+              item.banner.replace('banner\\', `${link}banner/`)
+            "
             alt=""
           />
         </div>
         <div class="content-event">
-          <span class="name-event">VIỆT NAM FESTRIVAL BÌNH THUẬN 2024</span>
-          <span class="address">Bình Thuận</span>
+          <span class="name-event">{{item.name_event}}</span>
+          <span class="address">{{ item.address }}</span>
         </div>
+        </router-link>
       </div>
-      <div class="item-event">
-        <div class="img">
-          <img
-            src="https://img.enjoysport.vn/v1/AUTH_63bc1636b6fd456893cd154b1d53ded7/img/event/WQYUeY9F.jpg"
-            alt=""
-          />
-        </div>
-        <div class="content-event">
-          <span class="name-event">VIỆT NAM FESTRIVAL BÌNH THUẬN 2024</span>
-          <span class="address">Bình Thuận</span>
-        </div>
-      </div>
+
+    
     </div>
   </div>
 </template>
@@ -59,7 +119,6 @@ import { ref } from "vue";
   display: flex;
   justify-content: center;
   margin: 24px 0;
-
 }
 .item-event {
   display: flex;
@@ -67,7 +126,7 @@ import { ref } from "vue";
   height: 140px;
   overflow: hidden;
   border-radius: 6px;
-  position: relative;   
+  position: relative;
   background-color: #ffffff;
   margin-bottom: 12px;
 }
@@ -81,16 +140,15 @@ import { ref } from "vue";
   object-fit: cover;
   height: 100%;
 }
-.content-event{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    padding-left: 28px;
-    
+.content-event {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-left: 28px;
 }
-.name-event{
-    color: #000000;
-    font-size: 24px;
-    margin-top: 28px;
+.name-event {
+  color: #000000;
+  font-size: 24px;
+  margin-top: 28px;
 }
 </style>

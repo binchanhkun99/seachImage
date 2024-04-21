@@ -19,7 +19,7 @@ const router = createRouter({
       component: Home,
     },
     {
-      path: "/detail-event",
+      path: "/detail-event/:id",
       name: "DetailEvent",
       component: HomeView,
     },

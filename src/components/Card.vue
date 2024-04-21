@@ -1,20 +1,55 @@
+<script>
+import { onMounted, watch, ref } from "vue";
+import request from "../utils/request";
 
+const currentPage = ref()
+const pageSize = ref(0);
+const page = ref()
+const totalPage = ref()
+const gptData = ref()
+// page.value = currentPage.value;
+// 👉 Fetching gptData
+const fetchEvents = async () => {
+    await request
+    .get(
+      `events?page=${page.value}&limit=${rowPerPage.value}&search=${searchQuery.value}`
+    )
+    .then((rss) => {
+      if (rss.status === 200) {
+        gptData.value = rss.data.events;
+        totalPage.value = rss.data.count;
+        pageSize.value = Math.ceil(totalPage.value / rowPerPage.value);
+        
+      }
+      
+    })
+    .catch((error) => {
+      
+      console.log(error);
+    });
+
+};
+onMounted(()=>{
+  fetchEvents()
+})
+</script>
 <template>
     <div class="latest-events">
             <!-- map với dataImage -->
-            <div class="col-12 col-md-4">
+            <div v-if="gptData" class="col-12 col-md-4" v-for="(item, index) in gptData" :key="index">
               <a href="">
                 <div class="event-item shadow-sm rounded">
                   <div class="preview">
-                    <img class="rounded-top" src="https://img.enjoysport.vn/v1/AUTH_63bc1636b6fd456893cd154b1d53ded7/img/event/ynzlmP5a.jpg" alt="UMC RUN - VƯƠN TẦM KHÁT VỌNG">
+                    <img class="rounded-top" src="https://img.enjoysport.vn/v1/AUTH_63bc1636b6fd456893cd154b1d53ded7/img/event/ynzlmP5a.jpg" :alt="item.name_event">
                   </div>
                   <div class="p-3">
-                    <div class="event-title text-truncate" title="UMC RUN - VƯƠN TẦM KHÁT VỌNG">UMC RUN - VƯƠN TẦM KHÁT VỌNG</div>
+                    <div class="event-title text-truncate" title="UMC RUN - VƯƠN TẦM KHÁT VỌNG">{{ item.name_event }}</div>
                     <div class="small">21/04/2024</div>
                   </div>
                 </div>
               </a>
             </div>
+        
     </div>
 </template>
 

@@ -5,12 +5,15 @@ import Card from "../components/Card.vue";
 
 import { UploadOutlined, SearchOutlined } from "@ant-design/icons-vue";
 
+import request from "../utils/request";
 let index = 0;
 const items = ref(["jack", "lucy"]);
 const value = ref();
 const inputRef = ref();
 const name = ref();
-console.log("nameSearch:", name.value);
+const searchQuery = ref()
+const rowPerPage = ref(10)
+// console.log("nameSearch:", name.value);
 const VNodes = defineComponent({
   props: {
     vnodes: {
@@ -27,6 +30,44 @@ const valueInput = ref("");
 watch(valueInput, () => {
   console.log(valueInput.value);
 });
+
+
+
+const currentPage = ref(1)
+const pageSize = ref();
+const page = ref()
+const totalPage = ref()
+const gptData = ref()
+
+const link = ref()
+link.value = import.meta.env.VITE_API_URL
+page.value = currentPage.value;
+// 👉 Fetching gptData
+const fetchEvents = async () => {
+  console.log("Vào đâyy rồi");
+    await request
+    .get(
+      `events?page=${page.value}&limit=${rowPerPage.value}&search=${searchQuery.value}`
+    )
+    .then((rss) => {
+      console.log("Test status", rss.data);
+      if (rss.status === 200) {
+        gptData.value = rss.data.events;
+        totalPage.value = rss.data.count;
+        pageSize.value = Math.ceil(totalPage.value / rowPerPage.value);
+        
+      }
+      
+    })
+    .catch((error) => {
+      
+      console.log(error);
+    });
+
+};
+onMounted(()=>{
+  fetchEvents()
+})
 </script>
 
 <template>
@@ -92,7 +133,25 @@ watch(valueInput, () => {
       <div class="mb-4">
         <h2>Sự kiện nổi bật</h2>
       </div>
-      <Card />
+      <div class="latest-events">
+            <!-- map với dataImage -->
+            <div v-if="gptData" class="col-12 col-md-4" v-for="(item, index) in gptData" :key="index">
+              <router-link style="width: 100%; display: flex;"
+                    :to="{ name: 'DetailEvent', params: { id: item.id } }"
+                  >
+                <div class="event-item shadow-sm rounded">
+                  <div class="preview">
+                    <img class="rounded-top" :src="item.banner.replace('banner\\', `${link}banner/`)">
+                  </div>
+                  <div class="p-3">
+                    <div class="event-title text-truncate" title="UMC RUN - VƯƠN TẦM KHÁT VỌNG">{{ item.name_event }}</div>
+                    <div class="small">{{item.start_date}}</div>
+                  </div>
+                </div>
+              </router-link>
+            </div>
+        
+    </div>
     </div>
   </div>
 </template>
