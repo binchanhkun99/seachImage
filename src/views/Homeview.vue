@@ -1,9 +1,13 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
 import { h } from "vue";
-import Card from "../components/Card.vue"
+import Card from "../components/Card.vue";
 
-import { UploadOutlined, SearchOutlined,   DownloadOutlined } from "@ant-design/icons-vue";
+import {
+  UploadOutlined,
+  SearchOutlined,
+  DownloadOutlined,
+} from "@ant-design/icons-vue";
 const value18 = ref();
 const value19 = ref();
 const activeKey = ref("1");
@@ -56,6 +60,41 @@ const getAllImage = async () => {
     loading.value = false;
   }
 };
+watch(activeKey, async (newVal, oldVal) => {
+  if (newVal == 2) {
+    console.log("Vô đây1", newVal);
+    loading.value = true;
+    try {
+      const apiUrl = "http://localhost:8000/";
+      const requestOptionsGetAll = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      console.log("Vô đây2", newVal);
+      const response = await fetch(apiUrl + `image`, requestOptionsGetAll);
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch data.");
+      }
+
+      const responseData = await response.json();
+
+      // Loại bỏ 30 phần tử đầu
+      const slicedData = responseData.slice(30);
+
+      // Cập nhật dữ liệu hiển thị
+      dataImage.value = slicedData;
+    } catch (error) {
+      console.error(error);
+    } finally {
+      loading.value = false;
+    }
+  } else if (newVal == 1) {
+    getAllImage();
+  }
+});
 
 // Watch để theo dõi sự thay đổi của trang và gọi hàm getAllImage
 watch(page, () => {
@@ -129,6 +168,7 @@ const searchForText = async () => {
     console.log(error);
   }
 };
+
 async function searchImage() {
   loading.value = true;
   const apiUrl = "http://localhost:8000/";
@@ -231,7 +271,6 @@ onMounted(() => {
               </a-button>
             </a-input-group>
           </div>
-         <Card/>
 
           <input
             id="real-file"
@@ -245,20 +284,20 @@ onMounted(() => {
           </span>
           <div class="list-img">
             <a-image-preview-group>
-            <div
-              class="item-img"
-              v-for="(item, index) in dataImage"
-              :key="index"
-            >
-             
+              <div
+                class="item-img"
+                v-for="(item, index) in dataImage"
+                :key="index"
+              >
                 <a-image
-                :preview="{
-     
-    }"
-                :width="200"  :src="item.replace('static\\', 'http://localhost:8000/static/')" />
-             
-            </div>
-          </a-image-preview-group>
+                  :preview="{}"
+                  :width="200"
+                  :src="
+                    item.replace('static\\', 'http://localhost:8000/static/')
+                  "
+                />
+              </div>
+            </a-image-preview-group>
           </div>
           <div>
             <!-- {{ totalPage }}dgg -->
@@ -275,11 +314,92 @@ onMounted(() => {
 
         <!-- Các tab khác tương tự -->
         <!-- Tab thứ 2 -->
-        <a-tab-pane key="2" tab="Chặng 2" force-render
-          >Content of Event Pane 2</a-tab-pane
-        >
+        <a-tab-pane key="2" tab="Chặng 2" force-render>
+          <div class="input-search">
+            <!-- Các input và button tương tự như trước -->
+            <a-input-group
+              compact
+              style="
+                align-items: center;
+                display: flex;
+                justify-content: center;
+              "
+            >
+              <a-input
+                placeholder="Tìm kiếm bằng Bib"
+                v-model:value="value18"
+                style="width: calc(100% - 200px)"
+              >
+              </a-input>
+              <a-button type="primary" @click="searchForText">
+                <template #icon><SearchOutlined /></template>
+              </a-button>
+            </a-input-group>
+            <a-input-group
+              compact
+              style="
+                align-items: center;
+                display: flex;
+                justify-content: center;
+              "
+            >
+              <a-input
+                disabled
+                v-model:value="value19"
+                placeholder="Tìm kiếm bằng hình ảnh"
+                style="width: calc(100% - 200px)"
+              >
+              </a-input>
+              <a-button
+                for="real-file"
+                @click="onFileChange"
+                id="custom-button"
+                type="primary"
+              >
+                <template #icon><UploadOutlined /></template>
+              </a-button>
+            </a-input-group>
+          </div>
+
+          <input
+            id="real-file"
+            type="file"
+            style="display: none"
+            @change="onFileChange"
+            ref="file" />
+          <span v-if="ctRs" class="content-result"
+            >Kết quả tìm kiếm cho: <b>{{ ttRs }}</b>
+          </span>
+          <div class="list-img">
+            <a-image-preview-group>
+              <div
+                class="item-img"
+                v-for="(item, index) in dataImage"
+                :key="index"
+              >
+                <a-image
+                  :preview="{}"
+                  :width="200"
+                  :src="
+                    item.replace('static\\', 'http://localhost:8000/static/')
+                  "
+                />
+              </div>
+            </a-image-preview-group>
+          </div>
+          <div>
+            <!-- {{ totalPage }}dgg -->
+          </div>
+          <div class="pag" v-if="dataImage && dataImage.length > 0">
+            <a-pagination
+              v-model:current="page"
+              :total="totalPage"
+              v-model:page-size="limit"
+              show-less-items
+            /></div
+        ></a-tab-pane>
         <!-- Tab thứ 3 -->
-        <a-tab-pane key="3" tab="Chặng 3">Content of Event Pane 3</a-tab-pane>
+        <!-- <a-tab-pane key="3" tab="Chặng 3">Content of Event Pane 3</a-tab-pane> -->
       </a-tabs>
     </div>
   </div>

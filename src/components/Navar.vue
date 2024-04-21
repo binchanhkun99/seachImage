@@ -14,7 +14,7 @@
             </li>
             <li>
               <RouterLink
-                to="/"
+                to="/about"
                 class="app-logo d-flex align-center gap-x-2 app-title-wrapper"
                 >Giới thiệu</RouterLink
               >
@@ -42,6 +42,7 @@
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 999;
 }
 .nav {
   width: 100%;
