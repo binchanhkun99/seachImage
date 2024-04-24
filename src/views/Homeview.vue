@@ -534,7 +534,7 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 18px;
+  margin: 18px 0;
 }
 .ant-modal-close-x {
   display: none !important;
@@ -586,6 +586,23 @@ onMounted(() => {
   .container-sm,
   .container-xl {
     max-width: 1140px;
+  }
+}
+@media (max-width: 791px) {
+  .list-img {
+    grid-template-columns: repeat(auto-fill, minmax(calc(33.333% - 4px), 1fr)) !important; /* 3 items per row on screens wider than 576px */
+  }
+  .input-search{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+  }
+}
+
+@media (max-width: 992px) {
+  .list-img {
+    grid-template-columns: repeat(auto-fill, minmax(calc(25% - 4px), 1fr)); /* 4 items per row on screens wider than 992px */
   }
 }
 </style>

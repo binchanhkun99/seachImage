@@ -78,10 +78,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="event" style="position: relative; top: 44px;">
+  <div class="event" style="position: relative; top: 68px;">
     <div class="container">
       <span class="title-event" >Sự kiện</span>
-      
                     <div class="item-event" v-for="(item, index) in gptData" :key="index">
                       <router-link style="width: 100%; display: flex;"
                     :to="{ name: 'DetailEvent', params: { id: item.id } }"
@@ -174,9 +173,10 @@ onMounted(() => {
   align-items: center;
   display: flex;
   justify-content: center;
-  margin: 24px 0;
+  padding: 24px 0;
 }
 .item-event {
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
   display: flex;
   width: 100%;
   height: 140px;

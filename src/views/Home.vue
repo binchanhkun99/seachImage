@@ -87,7 +87,7 @@ onMounted(()=>{
         >
           <input type="hidden" name="_token" value="" />
           <div class="row flex-md-row flex-column">
-            <div class="col">
+            <div class="col inputE">
             
               <a-select
                 v-model:value="eventValue"
@@ -98,7 +98,7 @@ onMounted(()=>{
       
               </a-select>
             </div>
-            <div class="col">
+            <div class="col inputE">
               <a-space style="width: 100%" direction="vertical">
                 <a-input
                   style="width: 100%"
@@ -108,7 +108,7 @@ onMounted(()=>{
               </a-space>
             </div>
             <div class="col-auto">
-              <router-link style="width: 100%; display: flex;"
+              <router-link class="dt" style="width: 100%; display: flex;"
                     :to="`/detail-event/${eventValue}/${valueInput}`">
                   
               <a-button
@@ -141,10 +141,11 @@ onMounted(()=>{
                     <img class="rounded-top" :src="item.banner.replace('banner\\', `${link}banner/`)">
                   </div>
                   <div class="p-3">
-                    <div style="white-space: nowrap;
+                    <div style="" class="event-title text-truncate" title="UMC RUN - VƯƠN TẦM KHÁT VỌNG"><h5 style="
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
     overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;" class="event-title text-truncate" title="UMC RUN - VƯƠN TẦM KHÁT VỌNG">{{ item.name_event }}</div>
+    -webkit-line-clamp: 1;">{{ item.name_event }}</h5></div>
                     <div class="small">{{item.start_date}}</div>
                   </div>
                 </div>
@@ -157,6 +158,7 @@ onMounted(()=>{
 </template>
 
 <style scoped>
+
 .cover {
   height: 600px;
   background: url(https://enjoysport.vn/images/cover.jpg) center center
@@ -300,12 +302,23 @@ img {
   .container-sm {
     max-width: 720px;
   }
+
   .col-md-4 {
     flex: 0 0 auto;
     width: calc(100% / 3);
   }
   .flex-md-row {
     flex-direction: row !important;
+  }
+}
+@media (max-width: 768px) {
+  .dt{
+    justify-content: end;
+    margin-top: 12px;
+    
+  }
+  .inputE{
+    margin: 8px 0;
   }
 }
 @media (min-width: 992px) {
@@ -315,6 +328,7 @@ img {
   .container-sm {
     max-width: 960px;
   }
+
 }
 
 @media (min-width: 1200px) {

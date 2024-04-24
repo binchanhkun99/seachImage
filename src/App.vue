@@ -6,6 +6,7 @@ import Foooter from './components/Foooter.vue';
 
 <template>
   <NavbarComponent />
+  
   <!-- <Homeview /> -->
   <RouterView />
   <Foooter />

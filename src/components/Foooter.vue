@@ -18,7 +18,7 @@ const showEvent = async (id) => {
       address_company.value = data.address_company
       phone.value = data.phone
       email.value = data.email
-      
+
     }
   } catch (error) {
     console.log(error);
@@ -136,6 +136,21 @@ onMounted(()=>{
   .container-md,
   .container-sm {
     max-width: 720px;
+  }
+
+}
+@media (max-width: 768px) {
+
+  .list-footer{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .support{
+      padding: 0px !important;
+  }
+  .title{
+    /* text-align: center; */
   }
 }
 @media (min-width: 992px) {
