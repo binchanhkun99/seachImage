@@ -13,6 +13,11 @@ const inputRef = ref();
 const name = ref();
 const searchQuery = ref();
 const rowPerPage = ref(10);
+
+
+
+const limit = ref(4);
+const totalPage = ref()
 // console.log("nameSearch:", name.value);
 const VNodes = defineComponent({
   props: {
@@ -35,29 +40,37 @@ const link = ref('')
 link.value = import.meta.env.VITE_API_URL
 const currentPage = ref(1);
 const pageSize = ref();
-const page = ref();
-const totalPage = ref();
+const page = ref(1);
+
 const gptData = ref();
 page.value = currentPage.value;
 // 👉 Fetching gptData
 const fetchEvents = async () => {
-  console.log("Vào đâyy rồi");
   await request
     .get(
-      `events?page=${page.value}&limit=${rowPerPage.value}&search=${searchQuery.value}`
+      `events`
     )
     .then((rss) => {
-      console.log("Test status", rss.data);
+    
       if (rss.status === 200) {
-        gptData.value = rss.data.events;
-        totalPage.value = rss.data.count;
-        pageSize.value = Math.ceil(totalPage.value / rowPerPage.value);
+        totalPage.value =  rss.data.events.length;
+
+        const offset = (page.value - 1) * limit.value;
+        const slicedData = rss.data.events.slice(offset, offset + limit.value);
+        gptData.value = slicedData
       }
     })
     .catch((error) => {
       console.log(error);
     });
 };
+// Watch để theo dõi sự thay đổi của trang và gọi hàm getAllImage
+watch(page, () => {
+  fetchEvents();
+});
+watch(limit, () => {
+  fetchEvents();
+});
 onMounted(() => {
   fetchEvents();
 });
@@ -74,6 +87,10 @@ onMounted(() => {
                     :to="{ name: 'DetailEvent', params: { id: item.id } }"
                   >
         <div class="img">
+          <div class="box-date">
+            <span class="numberdate">{{ item.number_date }}</span>
+            <span class="startdate">{{ item.start_date }}</span>
+          </div>
           <img
             :src="
               item.banner.replace('banner\\', `${link}banner/`)
@@ -86,8 +103,16 @@ onMounted(() => {
           <span class="address">{{ item.address }}</span>
         </div>
         </router-link>
+     
       </div>
-
+      <div class="pag" v-if="gptData && gptData.length > 0">
+            <a-pagination
+              v-model:current="page"
+              :total="totalPage"
+              v-model:page-size="limit"
+              show-less-items
+            />
+          </div>
     
     </div>
   </div>
@@ -106,9 +131,40 @@ onMounted(() => {
   margin-right: auto;
   margin-left: auto;
 }
+.pag {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 18px;
+}
 .title-event {
   font-size: 16px;
   font-weight: 500;
+}
+.numberdate{
+  color: white;
+  font-size: 18px;
+  width: 100%;
+}
+.startdate{
+  color: white;
+  font-size: 12px;
+  width: 100%;
+}
+.box-date{
+  text-align: center;
+    display: flex;
+    padding-top: 8px;
+    flex-direction: column;
+    /* justify-content: center; */
+    position: absolute;
+    top: -7px;
+    width: 70px;
+    left: 8px;
+    height: 75px;
+    background-color: red;
+    border-radius: 6px;
 }
 .title-event {
   font-size: 30px;
@@ -124,7 +180,7 @@ onMounted(() => {
   display: flex;
   width: 100%;
   height: 140px;
-  overflow: hidden;
+  /* overflow: hidden; */
   border-radius: 6px;
   position: relative;
   background-color: #ffffff;
@@ -133,6 +189,7 @@ onMounted(() => {
 .item-event .img {
   width: 22%;
   height: 100%;
+  border-radius: 8px;
 }
 .item-event .img img {
   width: 100%;

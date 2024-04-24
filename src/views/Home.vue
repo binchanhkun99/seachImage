@@ -7,7 +7,7 @@ import { UploadOutlined, SearchOutlined } from "@ant-design/icons-vue";
 
 import request from "../utils/request";
 let index = 0;
-const items = ref(["jack", "lucy"]);
+
 const value = ref();
 const inputRef = ref();
 const name = ref();
@@ -37,11 +37,12 @@ const currentPage = ref(1)
 const pageSize = ref();
 const page = ref()
 const totalPage = ref()
-const gptData = ref()
+const gptData = ref([])
 
 const link = ref()
 link.value = import.meta.env.VITE_API_URL
 page.value = currentPage.value;
+const listEvent = ref([])
 // 👉 Fetching gptData
 const fetchEvents = async () => {
   console.log("Vào đâyy rồi");
@@ -52,7 +53,9 @@ const fetchEvents = async () => {
     .then((rss) => {
       console.log("Test status", rss.data);
       if (rss.status === 200) {
-        gptData.value = rss.data.events;
+        gptData.value = rss.data.events.slice(0, 6);
+        listEvent.value = gptData.value.map(event => event.name_event)
+        console.log("listEvent.value", listEvent.value);
         totalPage.value = rss.data.count;
         pageSize.value = Math.ceil(totalPage.value / rowPerPage.value);
         
@@ -65,6 +68,8 @@ const fetchEvents = async () => {
     });
 
 };
+
+const eventValue = ref(1)
 onMounted(()=>{
   fetchEvents()
 })
@@ -83,26 +88,14 @@ onMounted(()=>{
           <input type="hidden" name="_token" value="" />
           <div class="row flex-md-row flex-column">
             <div class="col">
+            
               <a-select
-                v-model:value="value"
+                v-model:value="eventValue"
                 placeholder=""
                 style="width: 100%"
-                :options="items.map((item) => ({ value: item }))"
+                :options="gptData.map(i => ({value: i.id, label: i.name_event}))"
               >
-                <template #dropdownRender="{ menuNode: menu }">
-                  <a-space
-                    class="w-full search-input"
-                    style="padding: 4px 8px; width: 100%"
-                  >
-                    <a-input
-                      style="width: 100%"
-                      ref="inputRef"
-                      v-model:value="name"
-                      placeholder=""
-                    />
-                  </a-space>
-                  <v-nodes :vnodes="menu" />
-                </template>
+      
               </a-select>
             </div>
             <div class="col">
@@ -115,6 +108,9 @@ onMounted(()=>{
               </a-space>
             </div>
             <div class="col-auto">
+              <router-link style="width: 100%; display: flex;"
+                    :to="`/detail-event/${eventValue}/${valueInput}`">
+                  
               <a-button
                 style="color: #fff; background-color: #0d6efd"
                 type="submit"
@@ -122,6 +118,7 @@ onMounted(()=>{
               >
                 <template #icon><SearchOutlined /></template>
               </a-button>
+              </router-link>
             </div>
           </div>
         </form>
@@ -144,7 +141,10 @@ onMounted(()=>{
                     <img class="rounded-top" :src="item.banner.replace('banner\\', `${link}banner/`)">
                   </div>
                   <div class="p-3">
-                    <div class="event-title text-truncate" title="UMC RUN - VƯƠN TẦM KHÁT VỌNG">{{ item.name_event }}</div>
+                    <div style="white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;" class="event-title text-truncate" title="UMC RUN - VƯƠN TẦM KHÁT VỌNG">{{ item.name_event }}</div>
                     <div class="small">{{item.start_date}}</div>
                   </div>
                 </div>

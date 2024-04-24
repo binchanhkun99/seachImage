@@ -1,13 +1,18 @@
+<script setup>
+const rdrHome = ()=>{
+          window.location.href='https://runpic.vn'
+        }
+</script>
 <template>
   <div class="header">
     <div class="container">
       <div class="nav">
-        <div class="logo"><img src="../assets/logo.svg" alt="" /></div>
+        <div class="logo"><img style="cursor: pointer;" @click="rdrHome" src="../assets/logo.svg" alt="" /></div>
         <div class="menu-right">
           <ul>
             <li>
               <RouterLink
-                to="/home"
+                to="/"
                 class="app-logo d-flex align-center gap-x-2 app-title-wrapper"
                 >Trang chủ</RouterLink
               >

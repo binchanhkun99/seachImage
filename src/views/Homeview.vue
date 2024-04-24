@@ -29,6 +29,7 @@ link.value = import.meta.env.VITE_API_URL;
 const route = useRoute();
 
 const idEvent = route.params.id;
+const bibEvent = route.params.bib
 const gptData = ref([]);
 const race_limit = ref(null);
 
@@ -63,6 +64,7 @@ const showModal = () => {
 const current = ref();
 
 const getAllImage = async () => {
+  ctRs.value = ''
   const apiUrl = link.value;
   loading.value = true;
 
@@ -144,13 +146,13 @@ watch(limit, () => {
 });
 const base64String = ref("");
 const fileType = ref("");
-
+const showImg = ref();
 function onFileChange(event) {
   const ctx = document.getElementById("real-file");
   ctx.click();
   if (event.target.files && event.target.files.length > 0) {
-    console.log("Vô đây?");
     const file = event.target.files[0];
+    showImg.value = URL.createObjectURL(file);
     fileType.value = file.name.split(".").pop();
     const reader = new FileReader();
 
@@ -174,8 +176,11 @@ function onFileChange(event) {
 const ctRs = ref(false);
 // const ttRs = ref('')
 let ttRs = "";
+
+value18.value = bibEvent
 const totalPage = ref();
 const searchForText = async () => {
+  showImg.value =''
   if (!value18.value) {
     getAllImage();
   }
@@ -244,7 +249,12 @@ async function searchImage() {
 const loading = ref(false);
 onMounted(() => {
   showEvent();
-  getAllImage();
+  
+  if(bibEvent){
+
+    searchForText()
+  }
+  else getAllImage();
 });
 </script>
 
@@ -320,7 +330,14 @@ onMounted(() => {
           <span v-if="ctRs" class="content-result"
             >Kết quả tìm kiếm cho: <b>{{ ttRs }}</b>
           </span>
-          <div class="list-img">
+          <span v-if="showImg" class="content-result"
+            >Kết quả tìm kiếm cho: <img style="    width: 48px;
+    object-fit: cover;
+    background-repeat: no-repeat;" :src="showImg" alt="">
+          </span>
+         <div v-if="!dataImage.length>0" style="width: 100%; display: flex; justify-content: center; text-align: center">
+        <span>Không tìm thấy kết quả phù hợp</span></div>
+          <div class="list-img" v-else>
             <a-image-preview-group>
               <div
                 class="item-img"
@@ -331,7 +348,7 @@ onMounted(() => {
                   :preview="{}"
                   :width="200"
                   :src="
-                    item.replace('static\\', 'http://localhost:8000/static/')
+                    item.replace('static\\',  `${link}static/`)
                   "
                 />
               </div>
@@ -419,7 +436,7 @@ onMounted(() => {
                   :preview="{}"
                   :width="200"
                   :src="
-                    item.replace('static\\', 'http://localhost:8000/static/')
+                    item.replace('static\\', `${link}static/`)
                   "
                 />
               </div>
