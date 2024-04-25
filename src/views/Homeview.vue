@@ -238,7 +238,14 @@ async function searchImage() {
     base64String.value = "";
     fileType.value = "";
     const responseData = await response.json();
-    dataImage.value = responseData;
+     // Tính toán số trang dựa trên số lượng phần tử và giới hạn
+    // totalPage.value = Math.ceil(responseData.length / limit.value);
+    totalPage.value = responseData.length;
+    // Tính toán offset dựa trên trang hiện tại và giới hạn
+    const offset = (page.value - 1) * limit.value;
+    // Lấy dữ liệu phân trang từ mảng dữ liệu
+    const slicedData = responseData.slice(offset, offset + limit.value);
+    dataImage.value = slicedData;
     // console.log(JSON.stringify(responseData, null, 2));
     loading.value = false;
   } catch (error) {

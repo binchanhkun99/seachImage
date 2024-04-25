@@ -1,16 +1,24 @@
+<template>
+  <NavbarComponent :status="status" />
+  <div @click="toggleStatus">
+    <RouterView   />
+  <Foooter  />
+  </div>
+
+</template>
+
 <script setup>
 import NavbarComponent from './components/Navar.vue'
-import Homeview from './views/Homeview.vue';
 import Foooter from './components/Foooter.vue';
+import { ref } from 'vue'
+
+const status = ref(false);
+
+const toggleStatus = () => {
+  status.value = !status.value; // Chuyển đổi giá trị từ false sang true và ngược lại
+}
 </script>
 
-<template>
-  <NavbarComponent />
-  
-  <!-- <Homeview /> -->
-  <RouterView />
-  <Foooter />
-</template>
 
 <style scoped>
 .logo {

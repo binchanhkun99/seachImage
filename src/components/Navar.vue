@@ -1,8 +1,18 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, defineProps, watch, computed  } from 'vue';
+const sidebarVisible = ref(false)
 
-const sidebarVisible = ref(false);
 const sidebarTransform = ref('');
+const props = defineProps({
+  status: Boolean
+});
+
+const status = ref(props.status);
+
+watch(() => props.status, (newValue, oldValue) => {
+  closeSidebar()
+});
+ 
 
 function showSidebar() {
   sidebarVisible.value = true;
@@ -22,6 +32,7 @@ const rdrHome = ()=>{
           window.location.href='https://runpic.vn'
         }
 </script>
+
 <template>
 <header>
   <div class="container">
