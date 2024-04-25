@@ -209,5 +209,49 @@ onMounted(() => {
   color: #000000;
   font-size: 24px;
   margin-top: 28px;
+}/* Reponsive */
+@media (min-width: 576px) {
+  .container,
+  .container-sm {
+    max-width: 540px;
+  }
+}
+@media (min-width: 768px) {
+  .container,
+  .container-md,
+  .container-sm {
+    max-width: 720px;
+  }
+
+  .col-md-4 {
+    flex: 0 0 auto;
+    width: calc(100% / 3);
+  }
+  .flex-md-row {
+    flex-direction: row !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .container,
+  .container-lg,
+  .container-md,
+  .container-sm {
+    max-width: 960px;
+  }
+
+}
+
+@media (min-width: 1200px) {
+  .container,
+  .container-lg,
+  .container-md,
+  .container-sm,
+  .container-xl {
+    max-width: 1140px;
+  }
+  h2 {
+    font-size: 2rem;
+  }
 }
 </style>

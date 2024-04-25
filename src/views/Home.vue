@@ -311,16 +311,7 @@ img {
     flex-direction: row !important;
   }
 }
-@media (max-width: 768px) {
-  .dt{
-    justify-content: end;
-    margin-top: 12px;
-    
-  }
-  .inputE{
-    margin: 8px 0;
-  }
-}
+
 @media (min-width: 992px) {
   .container,
   .container-lg,
@@ -341,6 +332,16 @@ img {
   }
   h2 {
     font-size: 2rem;
+  }
+}
+@media (max-width: 768px) {
+  .dt{
+    justify-content: end;
+    margin-top: 12px;
+    
+  }
+  .inputE{
+    margin: 8px 0;
   }
 }
 </style>
