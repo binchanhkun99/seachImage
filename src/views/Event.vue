@@ -78,7 +78,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="event" style="position: relative; top: 68px;">
+  <div class="event" style="position: relative">
     <div class="container">
       <span class="title-event" >Sự kiện</span>
                     <div class="item-event" v-for="(item, index) in gptData" :key="index">
@@ -140,6 +140,8 @@ onMounted(() => {
 .title-event {
   font-size: 16px;
   font-weight: 500;
+  margin-top: 72px !important;
+
 }
 .numberdate{
   color: white;

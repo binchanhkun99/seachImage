@@ -101,7 +101,6 @@ const getAllImage = async () => {
 };
 watch(activeKey, async (newVal, oldVal) => {
   if (newVal == 2) {
-    console.log("Vô đây1", newVal);
     loading.value = true;
     try {
       const apiUrl = link.value

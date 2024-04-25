@@ -54,12 +54,11 @@ const rdrHome = ()=>{
                 class="app-logo d-flex align-center gap-x-2 app-title-wrapper"
                 >Sự kiện</RouterLink
               ></li>               
-                <li @click="showSidebar"><a href="#"><svg class="toggle" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" style="fill:rgba(0, 0, 0);"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"></path></svg></a></li>
+              <li @click="showSidebar"><svg class="toggle" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" style="fill:rgba(0, 0, 0);"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"></path></svg></li>
             </ul>
             
             <ul class="sidebar" :style="{ display: sidebarVisible ? 'flex' : 'none', transform: sidebarTransform }">
-                <li  @click="closeSidebar"><a href="#"><svg class="toggle" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0);"><path d="m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z"></path></svg></a></li>
-                <li><RouterLink
+              <li  @click="closeSidebar"><svg class="toggle" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0);"><path d="m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z"></path></svg></li>                <li><RouterLink
                 to="/"
                 class="app-logo d-flex align-center gap-x-2 app-title-wrapper"
                 >Trang chủ</RouterLink

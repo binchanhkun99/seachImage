@@ -7,8 +7,8 @@
   <div class="about-container">
     <div class="container">
       <div class="row d-flex align-items-center">
-        <div class="col t2">
-          <img src="https://enjoysport.vn/images/runnertag-3.png" alt="none" />
+        <div class="col t2 i1">
+          <img class="img-first" src="https://enjoysport.vn/images/runnertag-3.png" alt="none" />
         </div>
         <div class="col t1">
           <h1 class="fw-bold">Nhận diện số lib thông minh</h1>
@@ -45,6 +45,8 @@
 .about-container {
   padding-top: 3rem;
   padding-bottom: 3rem;
+  overflow: hidden;
+
 }
 
 .bg-light {
@@ -112,5 +114,15 @@
   .t1 {
     width: 80%;
   }
+  .img-first{
+  width: 423px;
+    margin-right: 100px;
+
 }
+.i1{
+  margin-right: -123px;
+}
+
+}
+
 </style>
