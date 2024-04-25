@@ -41,6 +41,7 @@ const Edit = ref({
   start_date: "",
   number_date: "",
 });
+const folder = ref()
 const showEvent = async (id) => {
   try {
     const res = await request.get(`events_by_id?event_id=${idEvent}`);
@@ -51,8 +52,10 @@ const showEvent = async (id) => {
       Edit.value.address = data.address;
       Edit.value.folder = data.folder;
       Edit.value.banner = data.banner;
+      folder.value = Edit.value.folder;
       Edit.value.start_date = data.start_date;
       Edit.value.number_date = data.number_date;
+
     }
   } catch (error) {
     console.log(error);
@@ -66,9 +69,10 @@ const current = ref();
 const getAllImage = async () => {
   ctRs.value = ''
   const apiUrl = link.value;
-  loading.value = true;
 
   try {
+    const urlWithParams = new URL(apiUrl + 'image');
+    urlWithParams.searchParams.append('folder_data_search', folder.value);
     const requestOptionsGetAll = {
       method: "GET",
       headers: {
@@ -76,7 +80,7 @@ const getAllImage = async () => {
       },
     };
 
-    const response = await fetch(apiUrl + `image`, requestOptionsGetAll);
+    const response = await fetch(urlWithParams, requestOptionsGetAll);
 
     if (!response.ok) {
       throw new Error("Failed to fetch data.");
@@ -105,20 +109,23 @@ watch(activeKey, async (newVal, oldVal) => {
     try {
       const apiUrl = link.value
   ;
-      const requestOptionsGetAll = {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-      console.log("Vô đây2", newVal);
-      const response = await fetch(apiUrl + `image`, requestOptionsGetAll);
+  const urlWithParams = new URL(apiUrl + 'image');
+    urlWithParams.searchParams.append('folder_data_search', folder.value);
+    const requestOptionsGetAll = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch data.");
-      }
+    const response = await fetch(urlWithParams, requestOptionsGetAll);
 
-      const responseData = await response.json();
+    if (!response.ok) {
+      throw new Error("Failed to fetch data.");
+    }
+
+    const responseData = await response.json();
+
 
       // Loại bỏ 30 phần tử đầu
       const slicedData = responseData.slice(30);
@@ -131,8 +138,8 @@ watch(activeKey, async (newVal, oldVal) => {
       loading.value = false;
     }
   } else if (newVal == 1) {
-    showEvent();
-    getAllImage();
+   await showEvent();
+     getAllImage();
   }
 });
 
@@ -195,7 +202,7 @@ const searchForText = async () => {
       },
     };
     const response = await fetch(
-      apiUrl + `search/${value18.value.trim()}`,
+      apiUrl + `search/${value18.value.trim()}/${folder.value}`,
       requestOptionsGet
     );
     if (!response.ok) {
@@ -219,6 +226,7 @@ async function searchImage() {
   const data = {
     type: fileType.value,
     base64_string: base64String.value,
+    folder_data_search: folder.value
   };
 
   const requestOptions = {
@@ -230,21 +238,16 @@ async function searchImage() {
   };
 
   try {
-    const response = await fetch(apiUrl + "search", requestOptions);
+    const response = await fetch(apiUrl + "search", requestOptions); // Chú ý: Sử dụng "/search" thay vì "search"
     if (!response.ok) {
       throw new Error("image error");
     }
     base64String.value = "";
     fileType.value = "";
     const responseData = await response.json();
-     // Tính toán số trang dựa trên số lượng phần tử và giới hạn
-    // totalPage.value = Math.ceil(responseData.length / limit.value);
-    totalPage.value = responseData.length;
-    // Tính toán offset dựa trên trang hiện tại và giới hạn
-    const offset = (page.value - 1) * limit.value;
-    // Lấy dữ liệu phân trang từ mảng dữ liệu
-    const slicedData = responseData.slice(offset, offset + limit.value);
-    dataImage.value = slicedData;
+    // Xử lý dữ liệu trả về nếu cần
+    // Cập nhật dữ liệu hiển thị
+    dataImage.value = responseData;
     // console.log(JSON.stringify(responseData, null, 2));
     loading.value = false;
   } catch (error) {
@@ -252,9 +255,10 @@ async function searchImage() {
     console.error("Error:", error);
   }
 }
+
 const loading = ref(false);
-onMounted(() => {
-  showEvent();
+onMounted(async() => {
+ await showEvent();
   
   if(bibEvent){
 
