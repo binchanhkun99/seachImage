@@ -189,7 +189,7 @@ onMounted(() => {
   margin-bottom: 12px;
 }
 .item-event .img {
-  width: 22%;
+  width: 216px;
   height: 100%;
   border-radius: 8px;
 }

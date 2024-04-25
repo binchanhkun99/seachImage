@@ -548,7 +548,7 @@ onMounted(() => {
 .banner {
   width: 100%;
   position: relative;
-  margin: 18px 0 0 0;
+  padding-top: 100px;
 }
 .banner img {
   width: 100%;
