@@ -33,7 +33,7 @@ watch(valueInput, () => {
 
 
 
-const currentPage = ref(1)
+const currentPage = ref(1);
 const pageSize = ref();
 const page = ref()
 const totalPage = ref()
