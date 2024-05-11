@@ -272,7 +272,7 @@ onMounted(async() => {
   <div class="banner">
     <div class="container">
       <div class="img">
-        <img :src="Edit.banner.replace('banner\\', `${link}banner/`)" alt="" />
+        <img :src="Edit.banner.replace(`banner\\`, `${link}banner/`)" alt="" />
       </div>
     </div>
   </div>
@@ -358,7 +358,7 @@ onMounted(async() => {
                   :preview="{}"
                   :width="200"
                   :src="
-                    item.replace('static\\',  `${link}static/`)
+                   item.replace(`${folder}\\`, `${link}${folder}/`)
                   "
                 />
               </div>
@@ -446,7 +446,7 @@ onMounted(async() => {
                   :preview="{}"
                   :width="200"
                   :src="
-                    item.replace('static\\', `${link}static/`)
+                    item.replace(`${folder}\\`, `${link}${folder}/`)
                   "
                 />
               </div>
