@@ -12,7 +12,7 @@ const gptData = ref()
 const fetchEvents = async () => {
     await request
     .get(
-      `events?page=${page.value}&limit=${rowPerPage.value}&search=${searchQuery.value}`
+      `events/?page=${page.value}&limit=${rowPerPage.value}&search=${searchQuery.value}`
     )
     .then((rss) => {
       if (rss.status === 200) {

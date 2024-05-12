@@ -45,10 +45,9 @@ page.value = currentPage.value;
 const listEvent = ref([])
 // 👉 Fetching gptData
 const fetchEvents = async () => {
-  console.log("Vào đâyy rồi");
     await request
     .get(
-      `events?page=${page.value}&limit=${rowPerPage.value}&search=${searchQuery.value}`
+      `events/?page=${page.value}&limit=${rowPerPage.value}&search=${searchQuery.value}`
     )
     .then((rss) => {
       console.log("Test status", rss.data);

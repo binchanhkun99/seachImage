@@ -48,7 +48,7 @@ page.value = currentPage.value;
 const fetchEvents = async () => {
   await request
     .get(
-      `events`
+      `events/`
     )
     .then((rss) => {
     
