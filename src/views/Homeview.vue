@@ -358,7 +358,7 @@ onMounted(async() => {
                   :preview="{}"
                   :width="200"
                   :src="
-                    item.replace(`${folder}\\`,  `${link}static/`)
+                   item.replace(`${folder}\\`, `${link}${folder}/`)
                   "
                 />
               </div>
@@ -446,7 +446,7 @@ onMounted(async() => {
                   :preview="{}"
                   :width="200"
                   :src="
-                    item.replace('static\\', `${link}static/`)
+                    item.replace(`${folder}\\`, `${link}${folder}/`)
                   "
                 />
               </div>

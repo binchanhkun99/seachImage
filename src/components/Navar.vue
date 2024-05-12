@@ -36,7 +36,7 @@ const rdrHome = ()=>{
 <template>
 <header>
   <div class="container">
-  <a href="/"><img src="../assets/logo.svg" alt="" class="logo"></a>  
+  <a href="/"><img src="../assets/logo_runpic_vertical.png" alt="" class="logo"></a>  
         <nav>
           <ul class="navlinks">
                 <li class="items"><RouterLink
@@ -129,7 +129,6 @@ font-family: "Roboto Condensed", sans-serif;;
     left: 20px;
     width: 100px;
     cursor: pointer;
-    width: 68px;
 }
 
 li, a, button{
