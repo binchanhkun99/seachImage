@@ -26,6 +26,7 @@ const open = ref(false);
 // })
 const link = ref();
 link.value = import.meta.env.VITE_API_URL;
+console.log("link.value", link.value);
 const route = useRoute();
 
 const idEvent = route.params.id;
@@ -280,6 +281,7 @@ onMounted(async() => {
     <div class="container">
       <div class="title">
         <span>{{ Edit.name_event }}</span>
+       
       </div>
 
       <a-tabs v-model:activeKey="activeKey" centered>
@@ -358,7 +360,7 @@ onMounted(async() => {
                   :preview="{}"
                   :width="200"
                   :src="
-                   item.replace(`${folder}\\`, `${link}${folder}/`)
+                   item.replace(`${folder}/`, `${link}${folder}/`)
                   "
                 />
               </div>
@@ -446,7 +448,7 @@ onMounted(async() => {
                   :preview="{}"
                   :width="200"
                   :src="
-                    item.replace(`${folder}\\`, `${link}${folder}/`)
+                    item.replace(`${folder}/`, `${link}${folder}/`)
                   "
                 />
               </div>
