@@ -249,6 +249,7 @@ async function searchImage() {
     // Xử lý dữ liệu trả về nếu cần
     // Cập nhật dữ liệu hiển thị
     dataImage.value = responseData;
+    totalPage.value = dataImage.value.length;
     // console.log(JSON.stringify(responseData, null, 2));
     loading.value = false;
   } catch (error) {
