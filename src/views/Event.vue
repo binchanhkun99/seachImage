@@ -92,7 +92,7 @@ onMounted(() => {
           </div>
           <img
             :src="
-              item.banner.replace('banner\\', `${link}banner/`)
+              item.banner.replace('banner/', `${link}banner/`)
             "
             alt=""
           />

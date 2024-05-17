@@ -274,7 +274,7 @@ onMounted(async() => {
   <div class="banner">
     <div class="container">
       <div class="img">
-        <img :src="Edit.banner.replace(`banner\\`, `${link}banner/`)" alt="" />
+        <img :src="Edit.banner.replace(`banner/`, `${link}banner/`)" alt="" />
       </div>
     </div>
   </div>
