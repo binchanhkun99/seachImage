@@ -137,7 +137,7 @@ onMounted(()=>{
                   >
                 <div class="event-item shadow-sm rounded">
                   <div class="preview">
-                    <img class="rounded-top" :src="item.banner.replace('banner\\', `${link}banner/`)">
+                    <img class="rounded-top" :src="item.banner.replace('banner/', `${link}banner/`)">
                   </div>
                   <div class="p-3">
                     <div style="" class="event-title text-truncate" title="UMC RUN - VƯƠN TẦM KHÁT VỌNG"><h5 style="
