@@ -68,7 +68,7 @@ const fetchEvents = async () => {
 
 };
 
-const eventValue = ref(1)
+const eventValue = ref()
 onMounted(()=>{
   fetchEvents()
 })
@@ -90,7 +90,7 @@ onMounted(()=>{
             
               <a-select
                 v-model:value="eventValue"
-                placeholder=""
+                placeholder="Chọn sự kiện"
                 style="width: 100%"
                 :options="gptData.map(i => ({value: i.id, label: i.name_event}))"
               >

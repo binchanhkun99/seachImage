@@ -30,7 +30,7 @@ console.log("link.value", link.value);
 const route = useRoute();
 
 const idEvent = route.params.id;
-const bibEvent = route.params.bib
+const bibEvent = route.params.bib;
 const gptData = ref([]);
 const race_limit = ref(null);
 
@@ -42,7 +42,7 @@ const Edit = ref({
   start_date: "",
   number_date: "",
 });
-const folder = ref()
+const folder = ref();
 const showEvent = async (id) => {
   try {
     const res = await request.get(`events_by_id?event_id=${idEvent}`);
@@ -56,7 +56,6 @@ const showEvent = async (id) => {
       folder.value = Edit.value.folder;
       Edit.value.start_date = data.start_date;
       Edit.value.number_date = data.number_date;
-
     }
   } catch (error) {
     console.log(error);
@@ -68,12 +67,12 @@ const showModal = () => {
 const current = ref();
 
 const getAllImage = async () => {
-  ctRs.value = ''
+  ctRs.value = "";
   const apiUrl = link.value;
 
   try {
-    const urlWithParams = new URL(apiUrl + 'image');
-    urlWithParams.searchParams.append('folder_data_search', folder.value);
+    const urlWithParams = new URL(apiUrl + "image");
+    urlWithParams.searchParams.append("folder_data_search", folder.value);
     const requestOptionsGetAll = {
       method: "GET",
       headers: {
@@ -108,25 +107,23 @@ watch(activeKey, async (newVal, oldVal) => {
   if (newVal == 2) {
     loading.value = true;
     try {
-      const apiUrl = link.value
-  ;
-  const urlWithParams = new URL(apiUrl + 'image');
-    urlWithParams.searchParams.append('folder_data_search', folder.value);
-    const requestOptionsGetAll = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+      const apiUrl = link.value;
+      const urlWithParams = new URL(apiUrl + "image");
+      urlWithParams.searchParams.append("folder_data_search", folder.value);
+      const requestOptionsGetAll = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
 
-    const response = await fetch(urlWithParams, requestOptionsGetAll);
+      const response = await fetch(urlWithParams, requestOptionsGetAll);
 
-    if (!response.ok) {
-      throw new Error("Failed to fetch data.");
-    }
+      if (!response.ok) {
+        throw new Error("Failed to fetch data.");
+      }
 
-    const responseData = await response.json();
-
+      const responseData = await response.json();
 
       // Loại bỏ 30 phần tử đầu
       const slicedData = responseData.slice(30);
@@ -139,8 +136,8 @@ watch(activeKey, async (newVal, oldVal) => {
       loading.value = false;
     }
   } else if (newVal == 1) {
-   await showEvent();
-     getAllImage();
+    await showEvent();
+    getAllImage();
   }
 });
 
@@ -184,10 +181,10 @@ const ctRs = ref(false);
 // const ttRs = ref('')
 let ttRs = "";
 
-value18.value = bibEvent
+value18.value = bibEvent;
 const totalPage = ref();
 const searchForText = async () => {
-  showImg.value =''
+  showImg.value = "";
   if (!value18.value) {
     getAllImage();
   }
@@ -220,14 +217,13 @@ const searchForText = async () => {
   }
 };
 
-
 async function searchImage() {
   loading.value = true;
   const apiUrl = link.value;
   const data = {
     type: fileType.value,
     base64_string: base64String.value,
-    folder_data_search: folder.value
+    folder_data_search: folder.value,
   };
 
   const requestOptions = {
@@ -259,14 +255,12 @@ async function searchImage() {
 }
 
 const loading = ref(false);
-onMounted(async() => {
- await showEvent();
-  
-  if(bibEvent){
+onMounted(async () => {
+  await showEvent();
 
-    searchForText()
-  }
-  else getAllImage();
+  if (bibEvent) {
+    searchForText();
+  } else getAllImage();
 });
 </script>
 
@@ -282,7 +276,6 @@ onMounted(async() => {
     <div class="container">
       <div class="title">
         <span>{{ Edit.name_event }}</span>
-       
       </div>
 
       <a-tabs v-model:activeKey="activeKey" centered>
@@ -344,12 +337,28 @@ onMounted(async() => {
             >Kết quả tìm kiếm cho: <b>{{ ttRs }}</b>
           </span>
           <span v-if="showImg" class="content-result"
-            >Kết quả tìm kiếm cho: <img style="    width: 48px;
-    object-fit: cover;
-    background-repeat: no-repeat;" :src="showImg" alt="">
+            >Kết quả tìm kiếm cho:
+            <img
+              style="
+                width: 48px;
+                object-fit: cover;
+                background-repeat: no-repeat;
+              "
+              :src="showImg"
+              alt=""
+            />
           </span>
-         <div v-if="!dataImage.length>0" style="width: 100%; display: flex; justify-content: center; text-align: center">
-        <span>Không tìm thấy kết quả phù hợp</span></div>
+          <div
+            v-if="!dataImage.length > 0"
+            style="
+              width: 100%;
+              display: flex;
+              justify-content: center;
+              text-align: center;
+            "
+          >
+            <span>Không tìm thấy kết quả phù hợp</span>
+          </div>
           <div class="list-img" v-else>
             <a-image-preview-group>
               <div
@@ -360,9 +369,7 @@ onMounted(async() => {
                 <a-image
                   :preview="{}"
                   :width="200"
-                  :src="
-                   item.replace(`${folder}/`, `${link}${folder}/`)
-                  "
+                  :src="item.replace(`${folder}/`, `${link}${folder}/`)"
                 />
               </div>
             </a-image-preview-group>
@@ -448,9 +455,7 @@ onMounted(async() => {
                 <a-image
                   :preview="{}"
                   :width="200"
-                  :src="
-                    item.replace(`${folder}/`, `${link}${folder}/`)
-                  "
+                  :src="item.replace(`${folder}/`, `${link}${folder}/`)"
                 />
               </div>
             </a-image-preview-group>
@@ -529,10 +534,13 @@ onMounted(async() => {
 }
 
 .item-img {
-  height: 120px;
   padding: 4px;
   box-sizing: border-box;
+  height: 120px;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .container {
@@ -603,19 +611,24 @@ onMounted(async() => {
 }
 @media (max-width: 791px) {
   .list-img {
-    grid-template-columns: repeat(auto-fill, minmax(calc(33.333% - 4px), 1fr)) !important; /* 3 items per row on screens wider than 576px */
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(calc(33.333% - 4px), 1fr)
+    ) !important; /* 3 items per row on screens wider than 576px */
   }
-  .input-search{
+  .input-search {
     display: flex;
     flex-direction: column;
     gap: 12px;
-
   }
 }
 
 @media (max-width: 992px) {
   .list-img {
-    grid-template-columns: repeat(auto-fill, minmax(calc(25% - 4px), 1fr)); /* 4 items per row on screens wider than 992px */
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(calc(25% - 4px), 1fr)
+    ); /* 4 items per row on screens wider than 992px */
   }
 }
 </style>
