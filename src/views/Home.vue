@@ -77,6 +77,7 @@ onMounted(()=>{
 <template>
   <div class="cover">
     <img style="height: 500px;
+    border-radius: 6px;
     position: absolute;
     background-repeat: no-repeat;
     width: 100%;
@@ -168,6 +169,7 @@ onMounted(()=>{
   /* background: url(../assets/bannerne.jpg) center center
     no-repeat; */
   display: flex;
+  position: relative;
   align-items: center;
   justify-content: center;
 }
