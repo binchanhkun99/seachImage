@@ -36,19 +36,19 @@ onMounted(()=>{
         <div class="contact">
           <span class="title">Liên hệ chúng tôi</span>
           <div class="item-contact">{{ company_name }}</div>
-          <div class="item-contact">
+          <!-- <div class="item-contact">
             Địa chỉ: {{ address_company }}
           </div>
-          <div class="item-contact">Phone: {{ phone }}</div>
+          <div class="item-contact">Phone: {{ phone }}</div> -->
           <div class="item-contact">Email: {{ email }}</div>
         </div>
         <div class="support">
-            <span class="title">Hỗ trợ</span>
+            <!-- <span class="title">Hỗ trợ</span>
           <div class="item-contact"><a href="">Hướng dẫn mua hàng</a></div>
           <div class="item-contact">
             <a href="">Chính sách thanh toán</a>
           </div>
-          <div class="item-contact"><a href="">Hoàn tiền</a></div>
+          <div class="item-contact"><a href="">Hoàn tiền</a></div> -->
         
         </div>
         <div class="law">
@@ -58,7 +58,7 @@ onMounted(()=>{
             <a href="">Chính sách bảo mật</a>
           </div>
           <div class="item-contact">
-            <a href="https://facebook.com">
+            <a href="https://www.facebook.com/SalaRunningHub">
                 <box-icon type='logo' name='facebook-square'>
             
         </box-icon>

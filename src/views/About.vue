@@ -1,20 +1,22 @@
-<script setup>
-
-
-
-</script>
+<script setup></script>
 <template>
   <div class="about-container">
     <div class="container">
       <div class="row d-flex align-items-center">
         <div class="col t2 i1">
-          <img class="img-first" src="https://enjoysport.vn/images/runnertag-3.png" alt="none" />
+          <img
+          style="    max-width: 400px;"
+            class="img-first"
+            src="../assets/abbib.jpg"
+            alt="none"
+          />
         </div>
         <div class="col t1">
-          <h1 class="fw-bold">Nhận diện số lib thông minh</h1>
+          <h1 class="fw-bold">Nhận diện số BIB thông minh</h1>
           <p class="lead mt-4">
-            Công nghệ mạnh mẽ cho phép người tham gia tìm thấy tất cả ảnh của họ
-            một cách nhanh chóng và dễ dàng.
+            Công nghệ trí tuệ nhân tạo mạnh mẽ, cho phép hệ thống “đọc” và “ghi
+            nhớ” khuôn mặt đúng với số BIB, cho phép người tham gia tìm thấy tất
+            cả ảnh của họ một cách nhanh chóng và dễ dàng.
           </p>
         </div>
       </div>
@@ -24,17 +26,17 @@
     <div class="container">
       <div class="row d-flex align-items-center">
         <div class="col t1">
-          <h1 class="fw-bold">Mua ảnh chất lượng cao dễ dàng</h1>
+          <h1 class="fw-bold">Hình ảnh chất lượng cao</h1>
           <p class="lead mt-4">
-            Hỗ trợ nhiều hình thức thanh toán giúp người tham gia mua ảnh chất
-            lượng cao một cách dễ dàng.
+            Tốc độ đăng tải và xử lý ảnh nhanh chóng, cho phép người dùng tìm
+            kiếm và tải xuống hình ảnh chất lượng cao ngay lập tức.
           </p>
         </div>
         <div
           class="col t2"
           style="align-items: end; display: flex; justify-content: end"
         >
-          <img src="https://enjoysport.vn/images/about-2.png" alt="none" />
+          <img style="    max-width: 400px;" src="../assets/ab1.jpg" alt="none" />
         </div>
       </div>
     </div>
@@ -46,7 +48,6 @@
   padding-top: 3rem;
   padding-bottom: 3rem;
   overflow: hidden;
-
 }
 
 .bg-light {
@@ -114,15 +115,12 @@
   .t1 {
     width: 80%;
   }
-  .img-first{
-  width: 423px;
+  .img-first {
+    width: 423px;
     margin-right: 100px;
-
+  }
+  .i1 {
+    margin-right: -123px;
+  }
 }
-.i1{
-  margin-right: -123px;
-}
-
-}
-
 </style>
