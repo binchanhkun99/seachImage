@@ -36,7 +36,7 @@
           class="col t2"
           style="align-items: end; display: flex; justify-content: end"
         >
-          <img style="    max-width: 400px;" src="../assets/ab1.jpg" alt="none" />
+          <img style="max-width: 400px;" src="../assets/ab1.jpg" alt="none" />
         </div>
       </div>
     </div>
