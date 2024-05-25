@@ -76,7 +76,12 @@ onMounted(()=>{
 
 <template>
   <div class="cover">
-    <div class="container">
+    <img style="height: 500px;
+    position: absolute;
+    background-repeat: no-repeat;
+    width: 100%;
+    object-fit: cover;" src="../assets/bannerne.jpg" alt="">
+    <div class="container" style="z-index: 99;">
       <div class="search-home">
         <h5 class="text-center">Tìm ảnh</h5>
         <form
@@ -160,8 +165,8 @@ onMounted(()=>{
 
 .cover {
   height: 600px;
-  background: url(https://enjoysport.vn/images/cover.jpg) center center
-    no-repeat;
+  /* background: url(../assets/bannerne.jpg) center center
+    no-repeat; */
   display: flex;
   align-items: center;
   justify-content: center;
