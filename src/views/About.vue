@@ -10,10 +10,12 @@
             src="../assets/abbib.jpg"
             alt="none"
           />
+
         </div>
         <div class="col t1">
           <h1 class="fw-bold">Nhận diện số BIB thông minh</h1>
           <p class="lead mt-4">
+
             Công nghệ trí tuệ nhân tạo mạnh mẽ, cho phép hệ thống “đọc” và “ghi
             nhớ” khuôn mặt đúng với số BIB, cho phép người tham gia tìm thấy tất
             cả ảnh của họ một cách nhanh chóng và dễ dàng.
@@ -30,7 +32,7 @@
           <p class="lead mt-4">
             Tốc độ đăng tải và xử lý ảnh nhanh chóng, cho phép người dùng tìm
             kiếm và tải xuống hình ảnh chất lượng cao ngay lập tức.
-          </p>
+         </p>
         </div>
         <div
           class="col t2"
