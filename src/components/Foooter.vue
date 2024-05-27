@@ -53,9 +53,9 @@ onMounted(()=>{
         </div>
         <div class="law">
             <span class="title">Pháp lý</span>
-          <div class="item-contact"><a href="">Điều khoản chung</a></div>
+          <div class="item-contact"><a href="/general">Điều khoản chung</a></div>
           <div class="item-contact">
-            <a href="">Chính sách bảo mật</a>
+            <a href="/privacy">Chính sách bảo mật</a>
           </div>
           <div class="item-contact">
             <a href="https://www.facebook.com/SalaRunningHub">

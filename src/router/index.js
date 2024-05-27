@@ -3,6 +3,8 @@ import HomeView from "../views/Homeview.vue";
 import Home from "../views/Home.vue";
 import Event from "../views/Event.vue";
 import About from "../views/About.vue";
+import Privacy from "../views/Privacy.vue"
+import Genaral from "../views/General.vue"
 import { useRouter } from "vue-router";
 
 
@@ -31,6 +33,16 @@ const router = createRouter({
       path: "/about",
       name: "About",
       component: About,
+    },
+    {
+      path: "/privacy",
+      name: "Privacy",
+      component: Privacy,
+    }, 
+       {
+      path: "/general",
+      name: "General",
+      component: Genaral,
     }
 
   ],
