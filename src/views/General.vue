@@ -59,7 +59,7 @@ Nếu bạn không bằng lòng với bất kỳ thông tin nào trên Website h
   padding-left: calc(var(--bs-gutter-x) * 0.5);
 }
 .col {
-  flex: 1 0 0%;
+  
 }
 .fw-bold {
   font-weight: 700;

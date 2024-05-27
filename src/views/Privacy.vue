@@ -65,7 +65,7 @@ Nếu có bất kỳ câu hỏi hoặc mối quan ngại nào về việc bảo 
   padding-left: calc(var(--bs-gutter-x) * 0.5);
 }
 .col {
-  flex: 1 0 0%;
+ 
 }
 .fw-bold {
   font-weight: 700;
