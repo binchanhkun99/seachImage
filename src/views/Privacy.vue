@@ -6,34 +6,34 @@
           <div class="col t1">
           <h1 class="fw-bold">CHÍNH SÁCH BẢO MẬT</h1>
           <p class="lead mt-4">
-<p>Mục đích và Phạm vi</p>
+<h2>Mục đích và Phạm vi</h2>
 <p>Mục đích của chính sách này là bảo vệ thông tin cá nhân của khách hàng, đối tác và nhân viên của Runpic (sau đây gọi là "Chúng tôi", "Của chúng tôi"). Chính sách áp dụng cho mọi thông tin cá nhân mà chúng tôi thu thập, lưu trữ, xử lý và chia sẻ trong quá trình hoạt động kinh doanh của mình.</p>
 
-<p>Thu thập thông tin cá nhân</p>
+<h2>Thu thập thông tin cá nhân</h2>
 <p>Chúng tôi chỉ thu thập thông tin cá nhân cần thiết và có mục đích từ các cá nhân theo cách công bằng và hợp pháp. Các phương tiện thu thập thông tin bao gồm mẫu đăng ký, trang web, cuộc trò chuyện trực tuyến, email, cuộc trao đổi trực tiếp và các phương tiện khác có thể được sử dụng trong hoạt động kinh doanh.</p>
 
-<p>Loại thông tin cá nhân thu thập</p>
+<h2>Loại thông tin cá nhân thu thập</h2>
 <p>Thông tin cá nhân có thể bao gồm tên, địa chỉ, số điện thoại, địa chỉ email, ngày sinh, thông tin tài khoản ngân hàng, thông tin về sản phẩm và dịch vụ, và bất kỳ thông tin nào khác cần thiết cho mục đích cụ thể.</p>
 
-<p>Sử dụng thông tin cá nhân</p>
+<h2>Sử dụng thông tin cá nhân</h2>
 <p>Thông tin cá nhân sẽ chỉ được sử dụng cho mục đích đã được quy định và thông báo cho cá nhân liên quan. Mục đích sử dụng thông tin có thể bao gồm cung cấp sản phẩm và dịch vụ, xử lý thanh toán, hỗ trợ khách hàng, quản lý tài khoản, tiếp thị và quảng cáo, và tuân thủ yêu cầu pháp lý.</p>
 
-<p>Bảo mật thông tin</p>
+<h2>Bảo mật thông tin</h2>
 <p>Chúng tôi cam kết bảo vệ thông tin cá nhân bằng cách thực hiện biện pháp kỹ thuật, tổ chức và hành vi phù hợp. Các biện pháp bảo mật bao gồm mã hóa dữ liệu, kiểm soát truy cập, giám sát hệ thống, đào tạo nhân viên và thực hiện các tiêu chuẩn bảo mật.</p>
 
-<p>Chia sẻ thông tin</p>
+<h2>Chia sẻ thông tin</h2>
 <p>Chúng tôi chỉ chia sẻ thông tin cá nhân với bên thứ ba khi cần thiết để hoàn thành mục đích đã quy định và sau khi đã nhận được sự đồng ý của cá nhân liên quan. Các bên thứ ba này có thể bao gồm nhà cung cấp dịch vụ, đối tác kinh doanh, cơ quan chính phủ hoặc các bên khác có quyền theo luật.</p>
 
-<p>Bảo quản và xóa thông tin</p>
+<h2>Bảo quản và xóa thông tin</h2>
 <p>Chúng tôi sẽ bảo quản thông tin cá nhân chỉ trong thời gian cần thiết cho mục đích đã quy định hoặc cho đến khi cá nhân liên quan yêu cầu xóa thông tin. Chúng tôi sẽ xoá hoặc vô hiệu hóa thông tin cá nhân khi không còn cần thiết và theo yêu cầu của cá nhân.</p>
 
-<p>Quyền lợi của cá nhân</p>
+<h2>Quyền lợi của cá nhân</h2>
 <p>Cá nhân có quyền truy cập, sửa đổi hoặc xóa thông tin cá nhân của mình. Cá nhân cũng có quyền yêu cầu chúng tôi ngừng sử dụng hoặc chia sẻ thông tin cá nhân của họ.</p>
 
-<p>Tuân thủ pháp luật</p>
+<h2>Tuân thủ pháp luật</h2>
 <p>Chúng tôi cam kết tuân thủ mọi quy định pháp luật liên quan đến bảo vệ thông tin cá nhân, bao gồm GDPR, CCPA và các quy định bảo vệ dữ liệu khác.</p>
 
-<p>Đánh giá và cập nhật</p>
+<h2>Đánh giá và cập nhật</h2>
 <p>Chúng tôi sẽ đánh giá và cập nhật chính sách Bảo mật Thông tin này định kỳ để đảm bảo rằng nó vẫn phản ánh các tiêu chuẩn và thực tiễn tốt nhất.</p>
 
 <p>Nếu có bất kỳ câu hỏi hoặc mối quan ngại nào về việc bảo mật thông tin cá nhân, xin vui lòng liên hệ với chúng tôi qua email runpic.vn@gmail.com</p>
