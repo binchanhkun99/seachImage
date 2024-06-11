@@ -293,7 +293,7 @@ onMounted(async () => {
               <a-input
                 placeholder="Tìm kiếm bằng Bib"
                 v-model:value="value18"
-                style="width: calc(100% - 200px)"
+                style="width: calc(100% - 100px)"
               >
               </a-input>
               <a-button type="primary" @click="searchForText">
@@ -312,7 +312,7 @@ onMounted(async () => {
                 disabled
                 v-model:value="value19"
                 placeholder="Tìm kiếm bằng hình ảnh"
-                style="width: calc(100% - 200px)"
+                style="width: calc(100% - 100px)"
               >
               </a-input>
               <a-button
@@ -403,7 +403,7 @@ onMounted(async () => {
               <a-input
                 placeholder="Tìm kiếm bằng Bib"
                 v-model:value="value18"
-                style="width: calc(100% - 200px)"
+                style="width: calc(100% - 100px)"
               >
               </a-input>
               <a-button type="primary" @click="searchForText">
@@ -422,7 +422,7 @@ onMounted(async () => {
                 disabled
                 v-model:value="value19"
                 placeholder="Tìm kiếm bằng hình ảnh"
-                style="width: calc(100% - 200px)"
+                style="width: calc(100% - 100px)"
               >
               </a-input>
               <a-button
@@ -550,6 +550,9 @@ onMounted(async () => {
   margin-right: auto;
   margin-left: auto;
 }
+/* #rc-tabs-0-panel-1 > div.input-search > span:nth-child(2) > input{
+  width: calc(100% - 100px);
+} */
 .pag {
   width: 100%;
   display: flex;
